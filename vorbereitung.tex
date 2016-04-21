@@ -1,0 +1,124 @@
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\title{Vorbereitungsaufgaben zum Praktikum „Optische Informationsübertragung“}
+\author{Henrik Kröger \and Nicolas Polido}
+\date{\today}
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+\subsection*{Definitionen}
+
+Normalisierte Frequenz:
+\begin{equation}
+    V = k_0 a \text{NA} = \frac{2\pi}{\lambda_0} a \sqrt{n_\text{K}^2 - n_\text{M}^2}
+\end{equation}
+
+Brechzahl-Unterschied zwischen Mantel und Kern:
+\begin{equation}
+    \Delta = \frac{n_\text{K}^2 - n_\text{M}^2}{2n_\text{K}^2}
+\end{equation}
+
+
+\subsection*{Erläutern Sie den Unterschied zwischen einer Einmoden- und Vielmodenfaser
+(Anzahl der Moden und Dispersion)}
+
+Eine Einmodenfaser ist so klein bzw. so gestaltet, dass sie
+(für eine gegebene Wellenlänge $\lambda$),
+nur eine Mode (die $\text{LP}_{01}$-Grundmode) zulässt.
+Eine Vielmodenfaser dagegen lässt viele Moden zu.
+In allen Fasern gibt es chromatische Dispersion, aber in Einmodenfasern gibt es
+keine \emph{modale Dispersion} – höhere Moden bewegen sich langsamer.
+
+
+\subsection*{Wie sehen die Brechzahlprofile einer polarisationserhaltenden sowie einer
+biegeunempfindlichen Einmodenfaser aus?}
+
+\begin{itemize}
+    \item Polarisationserhaltend -> ecliptic or PANDA, bowtie
+    \item biegeunempfindlich -> W fiber
+\end{itemize}
+
+
+\subsection*{Welche Arten von Streuung treten in optischen Glasfasern auf?}
+\begin{itemize}
+    \item lineare Streuung
+    \begin{itemize}
+        \item Rayleigh-Streuuung\\
+              Kommt durch mikroskopische Abweichungen im Material
+              (Glas besteht aus verschiedenen Oxiden
+               $\text{Si}\text{O}_2$, $\text{P}_2\text{O}_5$, \ldots)
+        \item Mie-Streuung\\
+              \dots
+        \item Wellenleiter-Streuung\\
+              Abweichungen des Kerndurchmessers oder des Kern-Mantel-Übergangs
+              oder Abweichungen von $n$ im Kern oder im Mantel
+    \end{itemize}
+
+    \item nicht-lineare Streuung
+    \begin{itemize}
+        \item stimulierte Brillouin-Streuung\\
+              Kommt durch thermische Molekularvibrationen und generiert akustische Phononen.
+        \item stimulierte Raman-Streuung\\
+              Generiert optische Phononen.
+
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{Was ist ein Puls-OTDR und wie funktioniert es?
+Wie berechnet sich die Ortsauflösung eines OTDRs?}
+OTDR heißt \emph{Optical Time Domain Reflectrometry},
+zu deutsch Optische Zeitbereichsreflektometrie.
+Bei OTDR wird ein kurzer Laserpuls in den Fiber geschickt.
+Licht, das wieder zurück kommt, wird gemessen.
+
+Die \emph{Ortsauflösung} hängt von der Breite des Laserpulses ab.
+Nach dem Rayleigh-Kriterium sind zwei Pulse unterscheidbar,
+wenn der eine im Minimum des anderen liegt.
+Daraus ergibt sich, dass die Ortsauflösung der halben Pulsdauer entspricht:
+\begin{equation*}
+    \frac{\Delta \tau}{2} \cdot n c
+\end{equation*}
+
+
+\subsection*{Was sind FBGs und wie werden diese hergestellt? Wo werden FBGs in der OKT eingesetzt?}
+\emph{Faser-Bragg-Gitter} sind in Lichtwellenleiter mit UV-Licht eingeschriebene optische Interferenzfilter.
+Sie reflektieren Licht einer bestimmten Wellenlänge zurück:
+\begin{equation*}
+    \lambda_B = n_\text{eff} \cdot 2 \Lambda = n_\text{eff} \cdot \lambda
+\end{equation*}
+
+
+
+
+\subsection*{Erklären Sie die Funktionsweise eines Mach-Zehnder (MZ)-Interferometers}
+
+
+
+\subsection*{Wie wird die Kohärenzlänge einer Lichtquelle berechnet?}
+Nach dem Wiener-Chintschin-Theorem berechnet sich die Kohärenzlänge:
+\begin{equation*}
+     l_c=\frac{\lambda^2}{\Delta\lambda}
+\end{equation*}
+
+
+\subsection*{Beschreiben Sie mathematisch das Prinzip eines Direkten- sowie eines Homodynempfängers}
+???
+
+\subsection*{Welche Multiplextechniken existieren für die OKT?}
+
+\subsection*{Welche Modulationsformate existieren für die OKT?}
+
+\subsection*{Bitte beschreiben Sie die Funktionsweise eines Abtastoszilloskops}
+
+\subsection*{Was ist ein Augendiagramm und welche Aussagen lässt es zu?}
+
+\end{document}
