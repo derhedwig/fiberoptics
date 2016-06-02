@@ -3,3 +3,6 @@
 *.pdf
 *.out
 *.toc
+*.swp
+*.gnuplot
+*.table

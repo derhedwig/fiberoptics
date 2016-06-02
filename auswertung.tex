@@ -10,6 +10,13 @@
 %\SIstyle{German}
 \usepackage{hyperref}
 \usepackage[square]{natbib}
+\usepackage{upgreek}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{width=11cm, compat=1.11}
+%\pgfplotsset{compat=1.11}
+\usepackage{float} % to use the [H] parameter in figures
+\usepackage[margin=1cm, font=small, labelfont=bf]{caption} % caption margin
 
 
 \title{Versuche zur Optischen Informationsübertragung}
@@ -100,7 +107,7 @@ Man kann im Monomodenfaser folgende Dispersionsarten unterscheiden:
     Brechungsindizes für jede Polarisationskomponente führen zur Dispersion.
 \end{description}
 
-\subsection{nicht-lineare Degradationen}
+\subsection{Nicht-lineare Degradationen}
 \paragraph{Vierwellenmischung}
 \paragraph{Selbstphasenmodulation}
 \paragraph{Kreuzphasenmodulation}
@@ -111,6 +118,114 @@ mithilfe von \emph{Optischer Zeitbereichsreflektometrie (OTDR)} und
 einem Powermeter untersucht.
 Die \emph{Rückstreukurve} soll durch unterschiedliche Fasertypen etc.
 manipuliert werden.
+
+\subsubsection{OTDR Einführung}
+Mittels OTDR misst man die Dämpfung der Signal im Träger. Vorteile sind, dass
+es eine zerstörungsfreie Messung ist, die \emph{in situ} an nur eine der Enden
+des Fasers gemacht werden kann. Man bekommt damit Information über die
+Abhängigkeit der Dämpfung von der Länge und über die Einfügedämpfung, womit man
+inferieren kann, ob es Defekten, Spleißen, Biegungen oder Koppler sich im Faser
+befinden, sowie die Lage desselben. Die Ortsauflösung der Messung ist eine
+Faltung zwischen die Pulsbreite und die Antwortfunktion des Detektionssytems.  
+
+\subsubsection{Funktionsprinzip} Das OTDR sendet Lichtpulse durch eine Ende des
+Fasers, und misst wieviel Zeit passiert ist, bis die Lichtsignale zurückkommen.
+Als die Pulse sich im Fiber fortpflanzen, treffen sie streuende und
+reflektierende Stellen, was das Licht zurück ins Apparat sendet. Die
+physikalische Ursachen davon sind Rayleigh-Streuung und Fresnel-Reflexion.
+Indem man die Ankunftszeit dieses zurückkehrendes Licht misst, kann man die
+Position und Größe der Fehler im Faser bestimmen.
+
+Ein Pulsgenerator, der von einem digitalen Signalprozessor getriggert wird,
+moduliert die Intensität eines Lasers. Typischerweise handelt es sich um ein
+viereckiger Laserpuls mit eine Breite von 5 ns bis 10 $\upmu$s. Ein
+Richtkoppler leitet das Rückkehrende Signal in einem Photodetektor und wird
+dann verstärkt, in einem ADC digitalisiert und im Signalprozessor analysiert.
+Die Abtastrate des ADC bestimmt die räumliche Weite der Abtastwerten. Zum
+Beispiel, eine Abtastrate von 50 Hz führt zu eine Räumliche Weite von 2 m. Um
+die räumliche Weite zu verkleinern ist es in der Praxis günstiger, die
+Abtastwerten von verschiedene Messungen zu mischen, als die Abtastfrequenz zu
+erhöhen, in einem Prozess, der Interleaving genannt wird.
+
+\subsubsection{Faser Spur}
+Nach der Messung bekommt man eine Spur, die das Faser charakterisiert. Der
+Graph wird folgendermassen interpretiert:
+\begin{description}
+  \item[$x$-Axis:] Zeigt die Distanz vom Messapparat der rückstreuende Stelle
+    in m.
+  \item[$y$-Axis:] Entspricht die Leistung in dB des Rückstreulichtes.
+\end{description}
+Es wird ein Umrechnungsfaktor von 
+\begin{equation*}
+1 \ \mathrm m = 10^{-8} \ \mathrm s 
+\end{equation*}
+benutzt um die Distanz aus der verstrichene Zeit anzugeben. Die
+Lichtgeschwindigkeit im Faser ist
+\begin{equation*}
+  v = \frac{c}{n}, \quad\quad \text{mit } n = 1.5 \text{ für Quarzglas.}
+\end{equation*}
+Damit erhalten wir eine Geschwindigkeit im Medium von 
+\begin{equation*}
+  v = \frac{3 \cdot 10^{8}}{\frac{3}{2}} = 2 \cdot 10^{8}
+  \ \frac{\mathrm m}{\mathrm s}.
+\end{equation*} Das Licht braucht also $\frac{1}{2} 10^{-8}$ Sekunden um 1
+Meter sich fortzupflanzen. Aber man misst eigentlich das doppelte Zeit, da man
+die Zeit des Echos registriert. Damit ergibt sich der obige Umrechnungsfaktor
+von $1\ \mathrm m = 10^{-8} \ \mathrm s$. Die Leistungsverluste am Detektor
+müssen auch halbiert werden, denn sie die Verluste der Hin- und Rückweg
+entsprechen. Daher werden die Werte im $y$-Axis, die in dB gegeben werden, mit
+einem Faktor $5\log_{10}$ anstatt von $10\log_{10}$ berechnet.
+
+Am Faser Spur erkennt man 3 verschiedene Arten von Features:
+\begin{description}
+  \item[gerade Linien:] Sind von der verteilte Rayleigh Streuung verursacht.
+  \item[positive Spizen:] Sind von diskrete Reflexionen verursacht.
+  \item[positive oder negative Stufen:] Entsprechen nicht-reflektierende
+    Ereignisse. 
+\end{description}
+
+\emph{Nicht-reflektierende Ereignisse} deuten mechanische Biegungen des Fasers,
+die Verluste durch dem Mantel verursachen, oder Schweiss Spleißen an. Sie
+zeigen eine plötzliche Senkung der Rückstreuleistung. Im Fall von Spleißen,
+wenn die gespleißten Fasern identisch waren, dann entspricht die Größe der
+Stufe, die Einfügedämpfung des Spleißes. Wenn die gespleißte Fasern aber
+verschieden waren, dann kann man nur die genaue Einfügedämpfung bekommen, indem
+man der Mittelwert über zwei Messungen, je an eine der Enden des Fasers,
+berechnet. 
+
+\emph{Reflektierende Ereignisse} sind wegen Unterschiede der Brechungsindex,
+die zur Fresnel-Reflexionen führen verursacht. Sie werden als Spitzen im
+Rückstreukurve registriert. Diese Reflexionen können von mechanische Spleißen
+verursacht werden oder von optische Stecker. In beiden Fällen sind kleine
+Gebiete mit Luft im Faser gegeben, und damit ergibt sich beim Glas-Luft
+Übergang eine Fresnel-Reflexion.
+
+\subsubsection{Messung}
+Im Versuch wurde mit zwei verschiedene Pulsbreiten gemessen, und zwar 50 ns und
+100 ns. In Abbildung \ref{fig:pw50} wird die Spur des Fasers dargestellt, die
+mit eine Pulsbreite von 50 ns gemessen war. 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+	title = OTDR Messung Pulsweite $50\ \mathrm{ns}$,
+	xlabel = Entfernung vom Detektor in m,
+	ylabel = Leistung am Detektor in dB,
+      ]
+      \addplot[samples=200] gnuplot[raw gnuplot]{plot 'messungen/OTDR_PW50.dat'};
+      \node[pin=45:Anfangsreflexion] at (59, 44760) {};
+      \node[pin=90:Spleiß] at (2046, 36524) {};
+      \node[pin=90:Spleiß] at (4028, 35827) {};
+      \node[pin=90:Stecker] at (5964, 36023) {};
+      \node[pin=90:Ende] at (8094, 35294) {};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Faser Spur gemessen mit eine Pulsbreite von 50 ns. Verschiedene
+  erkennbare Ereignisse sind markiert. Es gibt keine Reflexion am Ende, da 
+  dies mit Absicht unregelmäßig gebrochen war.}
+  \label{fig:pw50}
+\end{figure}
+
 
 
 \newpage
