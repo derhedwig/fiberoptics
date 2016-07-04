@@ -13,10 +13,11 @@
 \usepackage{upgreek}
 \usepackage{tikz}
 \usepackage{pgfplots}
-\pgfplotsset{width=11cm, compat=1.11}
+\pgfplotsset{width=11cm, height=7.5cm, compat=1.11}
 %\pgfplotsset{compat=1.11}
 \usepackage{float} % to use the [H] parameter in figures
 \usepackage[margin=1cm, font=small, labelfont=bf]{caption} % caption margin
+%\usepackage[left=4.5cm, right=4.5cm, top=2cm, bottom=2cm]{geometry}
 
 
 \title{Versuche zur Optischen Informationsübertragung}
@@ -208,19 +209,26 @@ Messfähigkeit eines OTDRs:
 \begin{description}
   \item[Dynamisches Bereich:] Es ist die Differenz zwischen der 
     Rückstreuleistung am Anfang und der Niveau des Rauschens.
+ 
   \item[Messbereich:] Es besagt die maximale Dämpfung eines Ereignisses, die
     noch Identifiziert werden kann.
+  
   \item[Todeszonen:] Die sind immer mit reflektive Ereignisse verbunden. Das
     OTDR Apparatur wird von das Rückstreulicht der Reflexion saturiert und
-    braucht einige Zeit um wieder empfindlich zu sein.
-  \item[Räumliche Schärfe:] Entspricht die Fähigkeit, zwei
+    braucht einige Zeit um wieder empfindlich zu sein. Es gibt zwei Typen von
+    Todeszonen: Die \emph{Ereignis Todeszone} ist der Abstand zwischen der
+    Anfang der Reflexion und der 1.5 dB Punkt an der Fallende Ecke. Die
+    \emph{Dämpfung Todeszone:} ist der Abstand zwischen der Anfang der
+    Reflexion und der 0.5 dB Punkt vor der Ende des Schwanzes.
+  
+      \item[Räumliche Schärfe:] Entspricht die Fähigkeit, zwei
     nebeneinanderliegende Ereignisse zu unterscheiden.
 \end{description}
 
 \subsubsection{Messung}
-Im Versuch wurde mit zwei verschiedene Pulsbreiten gemessen, und zwar 50 ns und
-100 ns. In Abbildung \ref{fig:pw50} wird die Spur des Fasers dargestellt, die
-mit eine Pulsbreite von 50 ns gemessen war. 
+Im Versuch wurde mit zwei verschiedene Pulsbreiten gemessen, und zwar 50 ns 
+und 100 ns. In Abbildung \ref{fig:pw50} wird die Spur des Fasers dargestellt
+, die mit eine Pulsbreite von 50 ns gemessen war. 
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}
@@ -229,12 +237,15 @@ mit eine Pulsbreite von 50 ns gemessen war.
 	xlabel = Entfernung vom Detektor in m,
 	ylabel = Leistung am Detektor in dB,
       ]
-      \addplot[samples=200] gnuplot[raw gnuplot]{plot 'messungen/OTDR_PW50.dat'};
-      \node[pin=45:Anfangsreflexion] at (59, 44760) {};
-      \node[pin=90:Spleiß] at (2046, 36524) {};
-      \node[pin=90:Spleiß] at (4028, 35827) {};
-      \node[pin=90:Stecker] at (5964, 36023) {};
-      \node[pin=90:Ende] at (8094, 35294) {};
+      %\addplot[samples=2] gnuplot[raw gnuplot]{plot 'messungen/OTDR_PW50.dat'};
+      \addplot[
+	samples=2,
+      	] table {./messungen/OTDR_PW50.dat};
+      \node[pin=45:Anfangsreflexion] at (59, 44.760) {};
+      \node[pin=90:1. Spleiß] at (2046, 36.524) {};
+      \node[pin=90:2. Spleiß] at (4028, 35.827) {};
+      \node[pin=90:Stecker] at (5964, 36.023) {};
+      \node[pin=90:Ende] at (8094, 35.294) {};
     \end{axis}
   \end{tikzpicture}
   \caption{Faser Spur gemessen mit eine Pulsbreite von 50 ns. Verschiedene
@@ -243,7 +254,136 @@ mit eine Pulsbreite von 50 ns gemessen war.
   \label{fig:pw50}
 \end{figure}
 
+Aus der Faserspur berechnet man die Verluste indem man Geraden vor und nach dem
+Ereignis fittet und den vertikalen Abstand rechnet. Im folgendem wird die
+Berechnung der Verluste für den 1. und 2. Spleiß, sowie für den Stecker
+durchgeführt und in Abbildungen \ref{fig:spl1}, \ref{fig:spl2} und
+\ref{fig:steck1} graphisch dargestellt.
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+	title = Verluste am 1. Spleiß,
+	xlabel = Entfernung vom Detektor in m,
+	ylabel = Leistung am Detektor in dB,
+	xmin = 1800,
+	xmax = 2400,
+      ]
+      \addplot[
+      	samples=2,
+      	%restrict x to domain=71:4050,
+      	restrict x to domain=1800:2400,
+	%only marks,
+	%mark size=0.6pt,
+     	] 
+	table {./messungen/OTDR_PW50.dat};
+      \addplot[samples=2, domain=1800:2200, thick] {3.67302974e+01 -1.14182000e-04*x};
+      \addplot[samples=2, domain=2000:2400, thick] {3.59826848e+01 -6.51226945e-05*x};
+      \draw[<->, thick] (2044.44, 36.497) -- (2044.44, 35.85);
+      \draw (2044.44,  36.173) node[align=center, anchor=east]
+      	{1. Spleiß Verlust\\= 0.647 dB};
+      \node[pin=45:Position des Sipleißes] at (2044.44, 36.497) {};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Messung der Verlust am 1. Spleiß. Es würde den Abstand zwischen zwei
+  gefittete Geraden berechnet.}
+  \label{fig:spl1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+	title = Verluste am 2. Spleiß,
+	xlabel = Entfernung vom Detektor in m,
+	ylabel = Leistung am Detektor in dB,
+	xmin = 3800,
+	xmax = 4300,
+      ]
+      \addplot[
+      	samples=2,
+      	restrict x to domain=3800:4300,
+     	] 
+	table {./messungen/OTDR_PW50.dat};
+      \addplot[samples=2, domain=3000:4100, thick] {3.59826848e+01 -6.51226945e-05*x};
+      \addplot[samples=2, domain=4025:5000, thick] {3.57670249e+01 -4.94830018e-05*x};
+      \draw[<->, thick] (4038, 35.7196411674) -- (4038, 35.5672125844);
+      \draw (4038,  35.65) -- (3975, 35.5) node[align=center, anchor=east]
+      	{2. Spleiß Verlust\\= 0.152 dB};
+      \node[pin=45:Position des Sipleißes] at (4038, 35.72) {};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Messung der Verlust am 2. Spleiß. Wie oben, es würde den Abstand
+  zwischen zwei gefittete Geraden berechnet.}
+  \label{fig:spl2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+	title = Verluste am Stecker,
+	xlabel = Entfernung vom Detektor in m,
+	ylabel = Leistung am Detektor in dB,
+	xmin = 5745,
+	xmax = 6206,
+      ]
+      \addplot[
+      	samples=2,
+      	restrict x to domain=5745:6206,
+     	] 
+	table {./messungen/OTDR_PW50.dat};
+      \addplot[samples=2, domain=5745:5975, thick] {3.57670249e+01
+      -4.94830018e-05*x};
+      \addplot[samples=2, domain=5925:6202, thick] {3.51381770e+01
+      -8.71765157e-06*x};
+      \draw[<->, thick] (5949, 35.4726505679) -- (5949, 35.0863157209);
+      \draw (5949,  35.3) -- (5885, 35.1) node[align=center, anchor=east]
+      	{Stecker Verlust\\= 0.386 dB};
+	\draw[thick] (5949, 35.4726505679) -- (5870, 35.8)
+	node[align=center, anchor=east] {Position des\\Steckers};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Messung der Verlust am Stecker. Es würde den Abstand
+  zwischen zwei gefittete Geraden wie üblich berechnet.}
+  \label{fig:steck1}
+\end{figure}
+
+Die Ergebnisse zeigen ein Verlust von 0.647 dB am 1. Spleiß bzw. 0.152 dB am
+2. Spleiß und ein Verlust von 0.386 dB am Stecker. Demnächst wird die Dämpfung
+Todeszone des Steckers analysiert und in Abbildung \ref{fig:steck2} graphisch
+dargestellt. Nach die Berechnung es ergibt sich eine Dämpfung Todeszone von 45
+m.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+	title = Dämpfung Todeszone am Stecker,
+	xlabel = Entfernung vom Detektor in m,
+	ylabel = Leistung am Detektor in dB,
+	xmin = 5745,
+	xmax = 6206,
+      ]
+	\addplot[
+      	samples=2,
+      	restrict x to domain=5745:6206,
+     	] 
+	table {./messungen/OTDR_PW50.dat};
+	\addplot[samples=2, thick, domain=5985:6206] {3.51381770e+01  -8.71765157e-06*x};
+	\addplot[samples=2, thick, domain=5985:6050] {3.51381770e+01 +0.5 -8.71765157e-06*x};
+	\draw[<->, thick] (6025, 35.5856531794) -- (6025, 35.0856531794);
+	\draw (6025, 35.35) node[anchor=west] {0.5 dB};
+	\addplot[thick] (5949, 35.40) -- (5949, 34.95);
+	\addplot[thick] (5994, 35.5859234266) -- (5994, 34.95);
+	\draw[<->, thick] (5949, 34.97) -- (5994, 34.97);
+	\draw (5970, 34.97) node[anchor=north] {45 m};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Messung der Länge der Dämpfung Todeszone am Stecker.}
+  \label{fig:steck2}
+\end{figure}
 
 \newpage
 \section{Komponenten eines faseroptischen Übertragungssystems}
