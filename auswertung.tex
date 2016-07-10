@@ -10,7 +10,7 @@
 %\SIstyle{German}
 \usepackage{hyperref}
 \usepackage[square]{natbib}
-\usepackage{upgreek}
+%\usepackage{upgreek}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{width=11cm, height=7.5cm, compat=1.11}
@@ -18,6 +18,7 @@
 \usepackage{float} % to use the [H] parameter in figures
 \usepackage[margin=1cm, font=small, labelfont=bf]{caption} % caption margin
 %\usepackage[left=4.5cm, right=4.5cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{graphicx}
 
 
 \title{Versuche zur Optischen Informationsübertragung}
@@ -45,12 +46,10 @@
 \paragraph{Krümmungsverluste}
 \ \\
 
-\noindent Wenn Verluste wegen Unreinigungen fast ganz beseitigt sind, es
+\noindent Wenn Verluste wegen Verunreinigungen fast ganz beseitigt sind, es
 bleiben noch die Verluste, die wegen die eigentliche Struktur des Glases
 verursacht sind.  Wenn der Krümmungsradius im Bereich der Zentimeter liegt,
 spricht man von makroskopischen Krümmungsverluste. 
-
-In \emph{Multimodenfaser} kann man die strahlenoptische Beschreibung benutzen.
 Bei eine Krümmung kann der kritische Winkel für die Totalreflexion
 überschritten werden in der gebogenen Portion. 
 
@@ -82,7 +81,8 @@ entschlüsseln. In \emph{Multimodenfasern} findet man:
   \item[Modendispersion:] Jede Mode kann unterschiedlich
     tief in den Mantel der Faser eindringen und sich damit mit verschiedenen
     Geschwindigkeiten fortpflanzen.
-\end{description} In \emph{Monomodenfaser} gibt es auch Dispersion. Der Grund
+\end{description} 
+In \emph{Monomodenfaser} gibt es auch Dispersion. Der Grund
 dafür ist, dass der Brechungsindex abhängig von der Wellenlänge ist.
 Lichtpulse oder Wellenpakete haben immer eine gewisse spektrale Breite und die
 verschiedenen Frequenzkomponenten des Pulses pflanzen sich dann mit
@@ -129,17 +129,18 @@ inferieren kann, ob es Defekten, Spleißen, Biegungen oder Koppler sich im Faser
 befinden, sowie die Lage desselben. Die Ortsauflösung der Messung ist eine
 Faltung zwischen die Pulsbreite und die Antwortfunktion des Detektionssytems.  
 
-\subsubsection{Funktionsprinzip} Das OTDR sendet Lichtpulse durch eine Ende des
-Fasers, und misst wieviel Zeit passiert ist, bis die Lichtsignale zurückkommen.
-Als die Pulse sich im Fiber fortpflanzen, treffen sie streuende und
-reflektierende Stellen, was das Licht zurück ins Apparat sendet. Die
-physikalische Ursachen davon sind Rayleigh-Streuung und Fresnel-Reflexion.
-Indem man die Ankunftszeit dieses zurückkehrendes Licht misst, kann man die
-Position und Größe der Fehler im Faser bestimmen.
+\subsubsection{Funktionsprinzip} 
+Das OTDR sendet Lichtpulse durch eine Ende des Fasers, und misst wieviel Zeit
+passiert ist, bis die Lichtsignale zurückkommen.  Als die Pulse sich im Fiber
+fortpflanzen, treffen sie streuende und reflektierende Stellen, was das Licht
+zurück ins Apparat sendet. Die physikalische Ursachen davon sind
+Rayleigh-Streuung und Fresnel-Reflexion.  Indem man die Ankunftszeit dieses
+zurückkehrendes Licht misst, kann man die Position und Größe der Fehler im
+Faser bestimmen.
 
 Ein Pulsgenerator, der von einem digitalen Signalprozessor getriggert wird,
 moduliert die Intensität eines Lasers. Typischerweise handelt es sich um ein
-viereckiger Laserpuls mit eine Breite von 5 ns bis 10 $\upmu$s. Ein
+viereckiger Laserpuls mit eine Breite von 5 ns bis 10 $\mu$s. Ein
 Richtkoppler leitet das Rückkehrende Signal in einem Photodetektor und wird
 dann verstärkt, in einem ADC digitalisiert und im Signalprozessor analysiert.
 Die Abtastrate des ADC bestimmt die räumliche Weite der Abtastwerten. Zum
@@ -388,20 +389,102 @@ m.
 \newpage
 \section{Komponenten eines faseroptischen Übertragungssystems}
 \subsection{Komponenten}
-\paragraph{Sendeseite}
-\paragraph{Empfängerseite}
-\paragraph{Modulator}
-\paragraph{Koppler}
-\paragraph{optische Verstärker}
-\paragraph{Polarisationssteller}
-\paragraph{Isolator}
-\paragraph{Zirkulator}
-\paragraph{Faser-Bragg-Gitter}
+\begin{description}
+  \item[Sender:]
+    Von alle mögliche Lichtquellen, die man benutzen kann um Signale zu
+    erzeugen, nicht alle sind in der Praxis benutzbar. Die Lichtquellen müssen
+    kosten-effizient sein, d.h. sie müssen effizient mit dem Faser koppelbar
+    sein, niedrige Energie Anforderungen haben, ein langes Lebensdauer besitzen
+    und möglichst wartungsfrei sein. Um damit Information übertragen zu können,
+    musst man sie auch modulieren können. \emph{LED}s, \emph{Diodenlasern} und
+    \emph{Faserlasern} sind die üblich benutzte Lichtquellen.
+
+  \item[Empfänger:]
+    In der Praxis benutzt man \emph{Photodioden}, da sie billig, klein, schnell
+    und zuverlässig sind. Es gibt zweit Typen von Photodioden, \emph{pn} und
+    \emph{pin} Typen und \emph{Lavinen} Typen. Diese letzte sind komplexer und
+    besitzen ein internes Verstärkungssystem, die sie empfindlicher macht. Sie
+    sind nur benutzt in Stellen wo dieser Empfindlichkeit wirklich benötigt
+    wird, z.B. in der transatlantische Faser Kabeln der letzte Generation. 
+
+  \item[Modulator:]
+    Um ein Lichtsignal zu modulieren und damit Information übertragen zu
+    können, kann man beispielsweise ein Mach-Zender-Interferometer benutzen.
+    Dies funktioniert folgendermaßen: ein kohärentes Lichtstrahl wird mittels
+    ein Strahlteiler in zwei Strahlen gesplittet und dann wieder gekoppelt. Ein
+    Komponent mit variablem Brechungsindex wird in einer der Wege einmontiert
+    und elektronisch gesteuert. Die Interferenz an der Kopplung der zwei
+    Strahlen kann somit beliebig kontrolliert werden und damit kann der
+    Laserstrahl moduliert werden.
+
+  \item[Koppler:]
+    
+  \item[optische Verstärker]
+  \item[Polarisationssteiler]
+  \item[Isolator]
+  \item[Zirkulator]
+
+  \item[Faser-Bragg-Gitter:] 
+    Es handelt sich um ein im Faser eingeschriebenen Interferenzfilter.
+    Ein Germanium dotiertes Lichtwellenleiter erduldet dauerhafte Änderungen
+    der Brechungsindex, wenn es mit UV-Licht bestrahlt wird.  Man nützt dieses
+    Effekt um das Filter im Faser einzuschreiben. Man geht folgendermaßen vor:
+    Zuerst teilt man ein UV-Laserstrahl in zwei Teile und danach überlagert man
+    die Teile mit einem bestimmten Winkel. Es ergibt sich ein Interferenzmuster
+    mit Räumliche Periode, das von der Winkel und Wellenlänge abhängt. Damit
+    kann man diese Periode sehr fein justieren. Man positioniert das Faser im
+    Überlagerungsbereich und, nach einer Weile, entsteht eine Modulation des
+    Brechungsindex im Kern des Fasers, die wie ein Bragg-Gitter wirkt.
+\end{description}
 
 \subsection{Versuch}
 \subsubsection{Spektren}
 \subsubsection{Signalübertragungsverhalten Mach-Zehnder-Modulator}
 \subsubsection{Herstellung und Untersuchung Faser-Bragg-Gitter}
+
+Die Hülle aus Plastik, die das Faser schützt, wird entfernt, und das nackte
+Stück Fasers wird dann hinter ein Beugungsgitter gesetzt. Wenn mit einem UV
+Excimerlaser bestrahlt, wird dieses Gitter der Interferenzmuster am Faser
+erzeugen, die man benötigt, um das Bragg-Gitter im Faser in der Form von
+Modulation der Brechungsindex einzuschreiben. Man kann dieses Setup in
+Abbildung \ref{fig:gitt} sehen. 
+
+Das eingeschriebenes Faser wir danach mit einem Spektrometer gekoppelt und
+dessen Spektrum analisiert. In Abbildung \ref{fig:bragg} kann man sehen, wie
+nur eine schmale Spalte im Spektrum von dem Bragg-Gitter durchgelassen wird,
+die um etwa 1548 nm liegt.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{./messungen/gitter.png}
+  \caption{Faser hinter das Beugungsgitter \emph{(Zentrum)}, bereit für die
+  Bestrahlung mit dem UV Excimerlaser. Im Detail \emph{(oben rechts)} sieht man
+die Grenze zwischen nackte und mit Plastik geschütztes Faser.}
+  \label{fig:gitt}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+	title = Spektrum,
+	xlabel = Wellenlänge in nm,
+	ylabel = Counts,
+	%xmin = 5745,
+	%xmax = 6206,
+      ]
+	\addplot[
+      	samples=2,
+      	%restrict x to domain=5745:6206,
+     	] 
+	table {./messungen/fbg-01.dat};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Spektrum nach Bragg-Gitter. Man sieht eine schmale Spalte um 1548
+  nm.}
+  \label{fig:bragg}
+\end{figure}
+
 
 
 \newpage

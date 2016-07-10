@@ -93,10 +93,39 @@ print('dead_x =', dead_x)
 print('dead_y =', dead_y)
 print('dead =', dead)
 
+####################
+#  2. KOMPONENTEN  #
+####################
+
+def findmax(a):
+    i = 0
+    idx = 0
+    maximum = 0
+    for j in range(0,len(a)):
+        if a[j] >= a[i]:
+            i = j
+            maximum = a[j]
+            idx = j
+    return [maximum, idx]
+
+def reverse(a):
+    idx_forw = 0
+    idx_back = len(a) - 1
+    while idx_forw < idx_back:
+        tmp = a[idx_forw]
+        a[idx_forw] = a[idx_back]
+        a[idx_back] = tmp
+        idx_forw = idx_forw + 1
+        idx_back = idx_back - 1
+    return a 
 
 
-
+fbg = np.loadtxt("./messungen/fbg-01.dat")
+fbg_max = fbg[findmax(fbg[:,1])[1]]
+print('\nBragg-Gitter')
+print('------------\n')
+print('fbg_max =', fbg_max)
 plt.title(r'Plot')
 plt.plot(pw50[:,0], pw50[:,1])
 #plt.plot(pw100[:,0], pw100[:,1])
-plt.show()
+#plt.show()
