@@ -37,16 +37,42 @@
 \newpage
 \section{Faseroptische Übertragungsstrecke}
 
-\subsection{lineare Degradationen}
+%\subsection{lineare Dagradationen}
 
-\subsubsection{Verluste}
-\paragraph{Streuung}
-\paragraph{Dämpfung}
-\paragraph{Koppelverluste}
-\paragraph{Krümmungsverluste}
-\ \\
+\subsection{Verluste}
+Verluste im Faser bestimmen wie lang eine kontinuierliche Strecke sein kann
+bevor man ein Verstärker benutzen muss. Es gibt in Glass prinzipiell drei verschiedene
+Arten von Verlusten: \emph{Absorption}, \emph{Streuung}, und
+\emph{Krümmungsverluste}.  
 
-\noindent Wenn Verluste wegen Verunreinigungen fast ganz beseitigt sind, es
+Absorption ist sehr klein und damit fast vernachlässigbar, in der Spektrum von
+Wellenlängen die kommerziell benutzt werden, im Vergleich zu Krümmung und
+Streuung. Es wird von Verunreinigungen verursacht.
+
+\subsubsection{Streuung}
+
+\begin{description}
+  \item[Rayleigh Streuung:] Es wird aus Wechselwirkungen entstanden, des Lichts
+    und Fluktuationen der Dichte, die während der Herstellung des Fasers
+    verursacht werden. 
+
+  \item[Brillouin Streuung:] Es wird von akustische Wellen induziert. 
+
+  \item[Raman Streuung:] Es ist ein Effekt von molekulare Vibrationen von
+    \emph{optische} Phononen, die von die Wechselwirkung von der Quarzmolekülen
+    und einem starken Magnetfeld verursacht wird.
+\end{description}
+
+Brillouin und Raman Streuung sind \emph{nicht lineare} Effekte, die nur bei höhe
+Leistungen auftreten. Dies kann ein Faktor, das Systeme mit hoher Leistung
+begrenzt. 
+
+%\paragraph{Dämpfung}
+%\paragraph{Koppelverluste}
+
+
+\subsubsection{Krümmungsverluste}
+Wenn Verluste wegen Verunreinigungen fast ganz beseitigt sind, es
 bleiben noch die Verluste, die wegen die eigentliche Struktur des Glases
 verursacht sind.  Wenn der Krümmungsradius im Bereich der Zentimeter liegt,
 spricht man von makroskopischen Krümmungsverluste. 
@@ -108,10 +134,10 @@ Man kann im Monomodenfaser folgende Dispersionsarten unterscheiden:
     Brechungsindizes für jede Polarisationskomponente führen zur Dispersion.
 \end{description}
 
-\subsection{Nicht-lineare Degradationen}
-\paragraph{Vierwellenmischung}
-\paragraph{Selbstphasenmodulation}
-\paragraph{Kreuzphasenmodulation}
+%\subsection{Nicht-lineare Degradationen}
+%\paragraph{Vierwellenmischung}
+%\paragraph{Selbstphasenmodulation}
+%\paragraph{Kreuzphasenmodulation}
 
 \subsection{Versuch}
 Es werden Übertragungsverluste an einem optischen Übertragungssystem
@@ -407,7 +433,7 @@ m.
     sind nur benutzt in Stellen wo dieser Empfindlichkeit wirklich benötigt
     wird, z.B. in der transatlantische Faser Kabeln der letzte Generation. 
 
-  \item[Modulator:]
+  \item[Modulatoren:]
     Um ein Lichtsignal zu modulieren und damit Information übertragen zu
     können, kann man beispielsweise ein Mach-Zender-Interferometer benutzen.
     Dies funktioniert folgendermaßen: ein kohärentes Lichtstrahl wird mittels
@@ -418,11 +444,50 @@ m.
     Laserstrahl moduliert werden.
 
   \item[Koppler:]
-    
-  \item[optische Verstärker]
-  \item[Polarisationssteiler]
-  \item[Isolator]
-  \item[Zirkulator]
+    Sie sind wichtig, und vermöglichen die Realisation von Faser Netzwerke. Man
+    kann ein Koppler konstruieren, indem man ein Paar Zentimeter von zwei
+    Fasern nebeneinander setzt und mit Hitze sie zusammen schweißt. Die Moden
+    in beiden Fasern dringen im Mantel ein und damit vermischen beide Signale.
+    Solche Komponenten haben zwei Eingänge und zwei Ausgänge. Wenn man eins
+    davon nicht benutzt, dann handelt es sich un ein Splitter bzw. ein
+    Kombinator.
+
+  \item[optische Verstärkern:]
+    Leistung wird verloren in langen Strecken von Fasern, am Kopplern, am
+    Isolatoren und im Allgemein. Man musst optische Verstärker dann einbauen um
+    die Verluste des Signals zu kompensieren. 
+    Früher würde das optische Signal in ein elektronisches Signal umgewandelt,
+    dies würde dann verstärkt und verformt und dann wieder in ein optisches
+    Signal umgewandelt.
+    Dies ist nicht optimal, da die Elektronik um drei Größenordnungs weniger
+    Bandbreite als das optische Faser hat.
+    Heutzutage benutzt man optische Verstärker.
+    Sie sind nicht perfekt, da es wegen physikalische Gründen keine Verstärkung
+    ohne Einführung von Rauschen gibt.  Es gibt zwei Arten von optische
+    Verstärker: Mit \emph{aktiven Fasern}, und mittels Halbleiter. Die aktiven
+    Fasern werden mit Stücken von mit geeigneter Materialien dotierten Fasern
+    realisiert. Sie sind von eine externe Lichtquelle gepumpt. Die
+    Halbleiterverstärker benutzen auch eine externe Lichquelle. 
+
+  %\item[Polarisationssteilern]
+  
+  \item[Isolatoren:] Sie lassen Licht in eine Richtung zu, und blockieren
+    (absorbieren) es in der entgegengesetzten Richtung. Deswegen werden sie
+    auch \emph{optische Dioden} genannt. Sie basieren an das Faraday Effekt,
+    d.h. an die Rotation der Polarisationsebene des polarisiertes Lichtes wenn
+    es sich durch ein Material bewegt, das sich in einem longitudinalen
+    Magnetfeld befindet: ein sogenanntes Faradaysches Rotator. Man
+    unterscheidet zwischen \emph{polarisierende} und
+    \emph{polarisationsinvariante} Isolatoren. 
+
+  \item[Zirkulatoren]
+    Sie benutzen mehrere Ausgängen, z.B. ein Eingang und zwei Ausgänge. Ein
+    Zirkulator basiert in ein Isolator, aber das Licht, das zurück in der Diode
+    kommt, wird nicht absorbiert sondern zu einen dritten Ausgang
+    weitergeleitet. Zum Beispiel, in eine OTDR Messung, das Licht geht durch
+    ein Zirkulator ins Faser ein; das Rückstreulicht wird dann von dem
+    Zirkulator zu einem zweiten Ausgang geführt, so es mit dem Signalprozessor
+    analysiert werden kann.
 
   \item[Faser-Bragg-Gitter:] 
     Es handelt sich um ein im Faser eingeschriebenen Interferenzfilter.
@@ -438,9 +503,9 @@ m.
 \end{description}
 
 \subsection{Versuch}
-\subsubsection{Spektren}
-\subsubsection{Signalübertragungsverhalten Mach-Zehnder-Modulator}
-\subsubsection{Herstellung und Untersuchung Faser-Bragg-Gitter}
+%\subsubsection{Spektren}
+%\subsubsection{Signalübertragungsverhalten Mach-Zehnder-Modulator}
+\subsubsection{Herstellung und Untersuchung eines Faser-Bragg-Gitter}
 
 Die Hülle aus Plastik, die das Faser schützt, wird entfernt, und das nackte
 Stück Fasers wird dann hinter ein Beugungsgitter gesetzt. Wenn mit einem UV
@@ -487,21 +552,21 @@ die Grenze zwischen nackte und mit Plastik geschütztes Faser.}
 
 
 
-\newpage
-\section{Systemdesign sowie Multiplex und Modulationsformate}
-\subsection{unterschiedliche Multiplextechniken}
-\subsection{unterschiedliche Modulationsformate}
-\subsection{Parameter für Systemdesign}
-\paragraph{Leitungsbudget}
-\paragraph{Bitfehlerrate}
-\paragraph{Jitter}
-\paragraph{Augendiagramm}
-\paragraph{Signal-zu-Rausch-Verhältnis}
-\paragraph{Empfängerempfindlichkeit}
-
-\subsection{Versuch}
-Charakterisierung der optischen Übertragungsstrecke:
-Bitfehlerrate in Abhängigkeit von der Dämpfung,
-Augendiagramm in Abhängigkeit von der Dämpfung.
+%\newpage
+%\section{Systemdesign sowie Multiplex und Modulationsformate}
+%\subsection{unterschiedliche Multiplextechniken}
+%\subsection{unterschiedliche Modulationsformate}
+%\subsection{Parameter für Systemdesign}
+%\paragraph{Leitungsbudget}
+%\paragraph{Bitfehlerrate}
+%\paragraph{Jitter}
+%\paragraph{Augendiagramm}
+%\paragraph{Signal-zu-Rausch-Verhältnis}
+%\paragraph{Empfängerempfindlichkeit}
+%
+%\subsection{Versuch}
+%Charakterisierung der optischen Übertragungsstrecke:
+%Bitfehlerrate in Abhängigkeit von der Dämpfung,
+%Augendiagramm in Abhängigkeit von der Dämpfung.
 
 \end{document}
