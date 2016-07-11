@@ -9,7 +9,7 @@
 %\usepackage{sistyle}
 %\SIstyle{German}
 \usepackage{hyperref}
-\usepackage[square]{natbib}
+%\usepackage[square]{natbib}
 %\usepackage{upgreek}
 \usepackage{tikz}
 \usepackage{pgfplots}
@@ -19,6 +19,7 @@
 \usepackage[margin=1cm, font=small, labelfont=bf]{caption} % caption margin
 %\usepackage[left=4.5cm, right=4.5cm, top=2cm, bottom=2cm]{geometry}
 \usepackage{graphicx}
+\usepackage{cite}
 
 
 \title{Versuche zur Optischen Informationsübertragung}
@@ -26,7 +27,6 @@
 \date{Durchgeführt am 26. und 27. April 2016}
 
 \begin{document}
-\bibliographystyle{geralpha}
 
 \maketitle
 
@@ -35,15 +35,16 @@
 \tableofcontents
 
 \newpage
-\section{Faseroptische Übertragungsstrecke}
+\section{Faseroptische Übertragungsstrecke} 
 
 %\subsection{lineare Dagradationen}
 
 \subsection{Verluste}
 Verluste im Faser bestimmen wie lang eine kontinuierliche Strecke sein kann
-bevor man ein Verstärker benutzen muss. Es gibt in Glass prinzipiell drei verschiedene
-Arten von Verlusten: \emph{Absorption}, \emph{Streuung}, und
-\emph{Krümmungsverluste}.  
+bevor man ein Verstärker benutzen muss. Es gibt in Glass prinzipiell drei
+verschiedene Arten von Verlusten: \emph{Absorption}, \emph{Streuung}, und
+\emph{Krümmungsverluste}. 
+
 
 Absorption ist sehr klein und damit fast vernachlässigbar, in der Spektrum von
 Wellenlängen die kommerziell benutzt werden, im Vergleich zu Krümmung und
@@ -515,7 +516,7 @@ Modulation der Brechungsindex einzuschreiben. Man kann dieses Setup in
 Abbildung \ref{fig:gitt} sehen. 
 
 Das eingeschriebenes Faser wir danach mit einem Spektrometer gekoppelt und
-dessen Spektrum analisiert. In Abbildung \ref{fig:bragg} kann man sehen, wie
+das Spektrum analisiert. In Abbildung \ref{fig:bragg} kann man sehen, wie
 nur eine schmale Spalte im Spektrum von dem Bragg-Gitter durchgelassen wird,
 die um etwa 1548 nm liegt.
 
@@ -568,5 +569,11 @@ die Grenze zwischen nackte und mit Plastik geschütztes Faser.}
 %Charakterisierung der optischen Übertragungsstrecke:
 %Bitfehlerrate in Abhängigkeit von der Dämpfung,
 %Augendiagramm in Abhängigkeit von der Dämpfung.
+
+\newpage
+\nocite{*}
+\bibliographystyle{geralpha}
+%\bibliographystyle{plain}
+\bibliography{mybib}
 
 \end{document}

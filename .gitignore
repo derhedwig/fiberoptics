@@ -6,3 +6,5 @@
 *.swp
 *.gnuplot
 *.table
+*.blg
+*.bbl
