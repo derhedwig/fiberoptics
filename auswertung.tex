@@ -12,6 +12,8 @@
 %\usepackage[square]{natbib}
 %\usepackage{upgreek}
 \usepackage{tikz}
+\usetikzlibrary{calc} % to use ($ (a) + (x,y) $)
+\usetikzlibrary[patterns]
 \usepackage{pgfplots}
 \pgfplotsset{width=11cm, height=7.5cm, compat=1.11}
 %\pgfplotsset{compat=1.11}
@@ -502,6 +504,109 @@ m.
     Überlagerungsbereich und, nach einer Weile, entsteht eine Modulation des
     Brechungsindex im Kern des Fasers, die wie ein Bragg-Gitter wirkt.
 \end{description}
+
+\subsubsection{Mach-Zehnder-Modulator}
+Der MZ-Modulator besteht aus einem integrierten Wellenleiter auf ein Material,
+das das \emph{elektrooptisches} Effekt zeigt. Elektrooptische Materialien haben die
+Eigenschaft, ihre Brechungsindex zu ändern, wenn eine Spannung angewendet wird.
+
+MZ-Modulatoren benutzen interferometrische Techniken: das eingehende Signal
+wird längst zwei verschiedene Armen des Interferometers gespaltet, die fast die
+gleiche Länge haben. Dann werden die zwei Wege im Ausgang kombiniert. Wenn die
+zwei Signale am Ausgang kombinieren, haben sie leicht verschiedene Phasen. Wenn
+die Phasen identisch sind, dann kombinieren die Signale mit wenigen Verlusten.
+Gibt es aber ein Phasenunterschied von $\pi$, dann wirkt die Interferenz
+destruktiv und die Verluste sind maximal.
+
+Das elektrooptische Effekt macht die Propagationsgeschwindigkeit verschieden in
+jedem Arm, und von der Spannung an einer angebauten Elektrode abhängig.
+Abhängig von der Modulationsspannung, das Licht wird mit hohe oder niedrige
+Verluste am kombinierenden Ausgang propagieren. (S. Abbildung \ref{fig:mzm}). 
+
+\begin{itemize}
+  \item MZ-Modulatoren haben Bandbreiten größer als 50 GHz gezeigt. 
+    
+  \item Um Modulatoren herzustellen würden LiNbO$_3$ und GaAs Materialen
+    benutzt. 
+
+  \item Der Polarisationszustand mußt zwischen DBF und Modulator gesteuert
+    werden.
+
+  \item DBF-Lasers mit MZ-Modulatoren sind die Lösung mit höchste Leistung für
+    Links größer Längen.
+\end{itemize}
+
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \coordinate (in) at (-37.5mm, 0);
+    \coordinate (in0) at (-25mm, 0);
+    \coordinate (in1) at (-20mm, 9mm);
+    \coordinate (in2) at (-20mm, -9mm);
+    \coordinate (out0) at (25mm, 0);
+    \coordinate (out) at (37.5mm, 0);
+    \coordinate (out1) at (20mm, 9mm);
+    \coordinate (out2) at (20mm, -9mm);
+    \coordinate (gen) at (-12mm, 0);
+    \coordinate (gen1) at ($ (gen) + (0, 15mm) $);
+    \coordinate (gen2) at ($ (gen) + (0, -15mm) $);
+    \coordinate (ter) at (12mm, 0);
+    
+    % Substrat und Elektroden %
+    \node [shape=rectangle, minimum width=75mm, minimum height=50mm, draw]
+    (substrat) at (0,0) {};
+    \node [shape=rectangle, minimum width=30mm, minimum height=12mm,
+    pattern=north east lines,  draw] (emid) {};
+    \node [shape=rectangle, minimum width=30mm, minimum height=6mm,
+    above=12mm, pattern=north east lines, draw]
+    (etop) {}; 
+    \node [shape=rectangle, minimum width=30mm, minimum height=6mm,
+    below=12mm, pattern=north east lines, draw] (ebot) {};
+
+    % Optisches Weg %
+    \draw  [line width=3.5mm, color=gray] (in) -- (in0) -- (in1) -- (out1) --
+    (out0) -- (out);
+    \draw  [line width=3.5mm, color=gray] (in) -- (in0) -- (in2) -- (out2) --
+    (out0) -- (out);
+
+    % Connections %
+    \draw (gen) node [shape=circle, color=black, fill=white, inner sep=0.5, draw]
+    (gen_node) {$\sim$};
+    \draw (gen) node [shape=circle, color=black, inner sep=1.5, fill, draw]
+    (gen1_node) at +(0, 15mm) {};
+    \draw (gen) node [shape=circle, color=black, inner sep=1.5, fill, draw]
+    (gen2_node) at +(0, -15mm) {};
+    \draw (gen1_node) -- (gen_node) -- (gen2_node);
+    \draw (ter) node [shape=rectangle, color=black, fill=white, minimum width=3mm,
+    minimum height=6mm, draw] (ter_node) {};
+    \draw (ter) node [shape=circle, color=black, inner sep=1.5, fill, draw]
+    (ter1_node) at +(0, 15mm) {};
+    \draw (ter) node [shape=circle, color=black, inner sep=1.5, fill, draw]
+    (ter2_node) at +(0, -15mm) {};
+    \draw [thick] (gen1_node) -- (gen_node) -- (gen2_node);
+    \draw [thick] (ter1_node) -- (ter_node) -- (ter2_node);
+
+    % Beschriftungen %
+    \draw (in) node [color=white] (in_node) at +(5mm, 0) {$\Longrightarrow$};
+    \draw (out) node [color=white] (out_node) at +(-5mm, 0)
+    {$\Longrightarrow$};
+    \node [align=center] (subs) at (29mm, -21mm) {Substrat: \\ LiNbO$_3$}; 
+    \node (eleks) at (-28mm, -22mm) {Elektroden};
+    \draw (in) node (sig_in) at +(5mm, 5mm) {EIN};
+    \draw (out) node (sig_out) at +(-5mm, 5mm) {AUS};
+    \draw (in1) node (wguide) at +(-7mm, 12mm) {Wellenleiter};
+    \draw (gen) node (gener) at +(15mm, -22mm) {Generator};
+    \draw [dashed] (wguide) -- ($ (in0) + (3.3mm, 5mm) $);
+    \draw [dashed] (eleks) -- (etop.west);
+    \draw [dashed] (eleks) -- (emid.west);
+    \draw [dashed] (eleks) -- (ebot.west);
+    \draw [dashed] (gener) -- (gen_node);
+
+  \end{tikzpicture}
+  \caption{Mach-Zehnder-Modulator.}
+  \label{fig:mzm}
+\end{figure}
 
 \subsection{Versuch}
 %\subsubsection{Spektren}
