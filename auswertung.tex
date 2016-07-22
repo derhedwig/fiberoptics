@@ -529,10 +529,10 @@ Verluste am kombinierenden Ausgang propagieren. (S. Abbildung \ref{fig:mzm}).
   \item Um Modulatoren herzustellen würden LiNbO$_3$ und GaAs Materialen
     benutzt. 
 
-  \item Der Polarisationszustand mußt zwischen DBF und Modulator gesteuert
+  \item Der Polarisationszustand mußt zwischen Laser und Modulator gesteuert
     werden.
 
-  \item DBF-Lasers mit MZ-Modulatoren sind die Lösung mit höchste Leistung für
+  \item DFB-Lasers (Distributed Feedback Lasers) mit MZ-Modulatoren sind die Lösung mit höchste Leistung für
     Links größer Längen.
 \end{itemize}
 
@@ -604,7 +604,8 @@ Verluste am kombinierenden Ausgang propagieren. (S. Abbildung \ref{fig:mzm}).
     \draw [dashed] (gener) -- (gen_node);
 
   \end{tikzpicture}
-  \caption{Mach-Zehnder-Modulator.}
+  \caption{Schematische Darstellung eines in Lithiumniobat (LiNbO$_3$) realisiertes
+  Mach-Zehnder-Modulators.}
   \label{fig:mzm}
 \end{figure}
 
@@ -656,7 +657,70 @@ die Grenze zwischen nackte und mit Plastik geschütztes Faser.}
   \label{fig:bragg}
 \end{figure}
 
+\subsubsection{Optische Signalübertragung}
 
+Die Spülen aus Teil 1 werden in eine Optische Übertragungsstrecke wie in
+Abbldung \ref{fig:os} eingebaut und und ein moduliertes Signal wird dadurch
+geleitet. Es wird ein Mach-Zehnder Modulator benutzt, der von ein
+Signalgenerator betrieben ist und das Ergebnis kann man am Oszilloskop sehen.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+
+    % Komponenten %
+    \draw (0,0) node [shape=rectangle, draw] (las) {Laser};
+    \draw (las) node [shape=rectangle, draw] (mz) at +(0,-20mm) {Modulator};
+    \draw (mz) node [shape=circle, draw, align=center, above] (sp1) at +(-20mm,
+    0) {Spule \\ 2000 m};
+    \draw (sp1) node [shape=circle, draw, align=center] (sp2) at +(-20mm, 0)
+    {Spule \\ 2000 m};
+    \draw (sp2) node [shape=circle, draw, align=center] (sp3) at +(-20mm, 0)
+    {Spule \\ 2000 m};
+    \draw (sp3) node [shape=circle, draw, align=center] (sp4) at +(-20mm, 0)
+    {Spule \\ 2000 m};
+    \draw (sp4.base) node [shape=rectangle, draw, align=center, below] (bert)
+    at +(-30mm, 0) {Oszilloskop \&  \\ Signalgenerator};
+
+    % Verbindungen %
+    \coordinate (pivot1) at ($ (bert) + (0, -20mm) $);
+    \coordinate (pivot2) at ($ (mz) + (0, -20mm) $);
+    \draw [->] (las) -- (mz);
+    \draw [->] (mz) -- (sp1.south);
+    \draw [->] (sp1.south) -- (sp2.south);
+    \draw [->] (sp2.south) -- (sp3.south);
+    \draw [->] (sp3.south) -- (sp4.south);
+    \draw [->] (sp4.south) -- (bert);
+    \draw [->] (bert) -- (pivot1) -- (pivot2) -- (mz);
+
+    % Beschriftungen %
+    \coordinate (spl1) at ($ ($0.5*($(sp2.south) - (sp1.south)$)$) 
+    + (sp1.south) $);
+    \coordinate (spl2) at ($ ($0.5*($(sp3.south) - (sp2.south)$)$) 
+    + (sp2.south) $);
+    \coordinate (steck) at ($ ($0.5*($(sp4.south) - (sp3.south)$)$) 
+    + (sp3.south) $);
+    \draw (spl1) node (spl1_node) at +(0, 30mm) {Spleiß 1};
+    \draw (spl2) node (spl2_node) at +(0, 30mm) {Spleiß 2};
+    \draw (steck) node (steck_node) at +(0, 30mm) {Stecker};
+    \draw [dashed, ->] (spl1_node) -- (spl1);
+    \draw [dashed, ->] (spl2_node) -- (spl2);
+    \draw [dashed, ->] (steck_node) -- (steck);
+
+  \end{tikzpicture}
+  \caption{Schematische Darstellung der Optische Strecke mit diverse
+  Komponenten. Die Spleißen und Stecker aus der 1. Teil sind auch
+gekennzeichnet.}
+  \label{fig:os}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.2]{./messungen/fos.png}
+  \caption{Hier kann man die Optische Strecke sehen aus zwei verschiedene
+  Winkeln.}
+  \label{fig:fos}
+\end{figure}
 
 %\newpage
 %\section{Systemdesign sowie Multiplex und Modulationsformate}
