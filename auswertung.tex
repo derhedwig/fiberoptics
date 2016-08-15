@@ -678,20 +678,23 @@ Signalgenerator betrieben ist und das Ergebnis kann man am Oszilloskop sehen.
     \draw (sp2) node [shape=circle, draw, align=center] (sp3) at +(-20mm, 0)
     {Spule \\ 2000 m};
     \draw (sp3) node [shape=circle, draw, align=center] (sp4) at +(-20mm, 0)
-    {Spule \\ 2000 m};
-    \draw (sp4.base) node [shape=rectangle, draw, align=center, below] (bert)
-    at +(-30mm, 0) {Oszilloskop \&  \\ Signalgenerator};
+    {Spule \\ 100 m};
+    \draw (sp4.base) node [shape=rectangle, draw, align=center, below] (det)
+    at +(-30mm, 0) {Detektor};
+    \draw (det) node [shape=rectangle, draw, align=center] (bert) at ($ (det) +
+    (0, -20mm) $) {Oszilloskop \&  \\ Signalgenerator};
 
     % Verbindungen %
-    \coordinate (pivot1) at ($ (bert) + (0, -20mm) $);
     \coordinate (pivot2) at ($ (mz) + (0, -20mm) $);
     \draw [->] (las) -- (mz);
     \draw [->] (mz) -- (sp1.south);
     \draw [->] (sp1.south) -- (sp2.south);
     \draw [->] (sp2.south) -- (sp3.south);
     \draw [->] (sp3.south) -- (sp4.south);
-    \draw [->] (sp4.south) -- (bert);
-    \draw [->] (bert) -- (pivot1) -- (pivot2) -- (mz);
+    \draw [->] (sp4.south) -- (det);
+    \draw [->] (det) -- (bert);
+    \draw (bert) -- (pivot2);
+    \draw [->] (pivot2) -- (mz);
 
     % Beschriftungen %
     \coordinate (spl1) at ($ ($0.5*($(sp2.south) - (sp1.south)$)$) 
